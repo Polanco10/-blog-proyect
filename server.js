@@ -40,3 +40,10 @@ process.on('unhandledRejection', err => { //se define un listener para manejar l
     });
 });
 
+process.on('SIGTERM', () => {
+    console.log('SIGTERM RECEIVED. Shutting down gracefully');
+    server.close(() => {
+        console.log('Process terminated!')
+    })
+})
+

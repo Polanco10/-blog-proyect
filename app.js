@@ -16,6 +16,7 @@ const userRouter = require('./routes/userRoutes');
 
 const app = express();
 
+app.enable('trust proxy');
 //global middlewares
 //middlewares -> en la mitad entre el req y el res
 

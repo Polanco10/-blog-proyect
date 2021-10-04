@@ -11,7 +11,7 @@
             "description": "Development server"
         },
         {
-            "url": "https://:herokuapp.algo.com/api/v1",
+            "url": "https://blog-proyect.herokuapp.com/api/v1",
             "description": "Production server"
         }
     ],
