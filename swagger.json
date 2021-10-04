@@ -58,6 +58,145 @@
                     }
                 }
             }
+        },
+        "/users/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "description": "Crear un nuevo usuario en el sistema",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "uniqueItems": true
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "email": "email@email.com",
+                                    "password": "pass1234"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/200"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    }
+                }
+            }
+        },
+        "/users/me": {
+            "get": {
+                "tags": [
+                    "Current User"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "description": "Retorna el usuario loggeado",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "email": {
+                                            "type": "string"
+                                        },
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "role": {
+                                            "type": "string"
+                                        },
+                                        "id": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/articles/{id}": {
+            "get": {
+                "tags": [
+                    "Articles"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "description": "Id de articulo",
+                        "example": "615930d4f37971021d64b413"
+                    }
+                ],
+                "description": "Retorna un articulo",
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Articles"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/articles": {
+            "get": {
+                "tags": [
+                    "Articles"
+                ],
+                "description": "Retorna un listdado de articulos",
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/Articles"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -192,7 +331,8 @@
             "bearerAuth": {
                 "type": "http",
                 "scheme": "bearer",
-                "bearerFormat": "JWT"
+                "bearerFormat": "JWT",
+                "in": "header"
             }
         }
     }
