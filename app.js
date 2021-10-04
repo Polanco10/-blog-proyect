@@ -5,6 +5,7 @@ const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp')
+const compression = require('compression');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 
@@ -47,6 +48,8 @@ app.use(xss());
 app.use(hpp({
     whitelist: ['title', 'author']
 }));
+
+app.use(compression()) //comprimir texto enviado a los clients
 
 // date middleware
 app.use((req, res, next) => {
