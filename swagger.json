@@ -1,0 +1,199 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Proyecto Blog",
+        "description": "API realizada con NodeJS + Express"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000/api/v1",
+            "description": "Development server"
+        },
+        {
+            "url": "https://:herokuapp.algo.com/api/v1",
+            "description": "Production server"
+        }
+    ],
+    "tags": [
+        {
+            "name": "Users",
+            "description": "Endpoints para admins del sistema"
+        },
+        {
+            "name": "Current User",
+            "description": "Endpoints para usuarios del sistema"
+        },
+        {
+            "name": "Articles",
+            "description": "Endpoints para articulos del sistema"
+        },
+        {
+            "name": "Authentication",
+            "description": "Endpoints relacionados con autenticación en el sistema"
+        }
+    ],
+    "paths": {
+        "/users/signup": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "description": "Crear un nuevo usuario en el sistema",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/200"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "User": {
+                "required": [
+                    "name",
+                    "email",
+                    "password",
+                    "passwordConfirm"
+                ],
+                "properties": {
+                    "_id": {
+                        "type": "string",
+                        "uniqueItems": true
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string",
+                        "uniqueItems": true
+                    },
+                    "photo": {
+                        "type": "string"
+                    },
+                    "role": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "passwordConfirm": {
+                        "type": "string"
+                    },
+                    "passwordChangedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "passwordResetToken": {
+                        "type": "string"
+                    },
+                    "passwordResetExpires": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "active": {
+                        "type": "boolean"
+                    }
+                },
+                "example": {
+                    "name": "Nombre",
+                    "email": "email@email.com",
+                    "password": "pass1234",
+                    "passwordConfirm": "pass1234"
+                }
+            },
+            "Articles": {
+                "required": [
+                    "title",
+                    "description"
+                ],
+                "properties": {
+                    "_id": {
+                        "type": "string",
+                        "uniqueItems": true
+                    },
+                    "title": {
+                        "type": "string",
+                        "uniqueItems": true
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "author": {
+                        "$ref": "#/components/schemas/User"
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "imageCover": {
+                        "type": "string"
+                    },
+                    "category": {
+                        "type": "string",
+                        "enum": [
+                            "Programacion",
+                            "Idioma"
+                        ]
+                    }
+                }
+            }
+        },
+        "parameters": {
+            "skipParam": {
+                "name": "skip",
+                "in": "query",
+                "description": "number of items to skip",
+                "required": true,
+                "schema": {
+                    "type": "integer",
+                    "format": "int32"
+                }
+            },
+            "limitParam": {
+                "name": "limit",
+                "in": "query",
+                "description": "max records to return",
+                "required": true,
+                "schema": {
+                    "type": "integer",
+                    "format": "int32"
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "description": "Ok."
+            },
+            "400": {
+                "description": "Bad Request."
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    }
+}
