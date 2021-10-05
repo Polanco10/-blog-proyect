@@ -6,6 +6,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp')
 const compression = require('compression');
+const cors = require('cors');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 
@@ -19,6 +20,9 @@ const app = express();
 app.enable('trust proxy');
 //global middlewares
 //middlewares -> en la mitad entre el req y el res
+app.user(cors()); //agrega algunos headers al response
+
+app.options('*', cors()); //Habilitar cors para todos los http methods
 
 app.use(helmet()); // Se agregan headers de seguridad http 
 

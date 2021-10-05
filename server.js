@@ -40,7 +40,7 @@ process.on('unhandledRejection', err => { //se define un listener para manejar l
     });
 });
 
-process.on('SIGTERM', () => {
+process.on('SIGTERM', () => { //Cerrar el proceso cuando Heroku reinicie las app.
     console.log('SIGTERM RECEIVED. Shutting down gracefully');
     server.close(() => {
         console.log('Process terminated!')
