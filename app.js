@@ -20,7 +20,7 @@ const app = express();
 app.enable('trust proxy');
 //global middlewares
 //middlewares -> en la mitad entre el req y el res
-app.user(cors()); //agrega algunos headers al response
+app.use(cors()); //agrega algunos headers al response
 
 app.options('*', cors()); //Habilitar cors para todos los http methods
 
